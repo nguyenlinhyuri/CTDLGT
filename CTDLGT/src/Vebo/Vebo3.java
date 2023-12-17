@@ -2,46 +2,67 @@ package Vebo;
 
 import java.util.*;
 
-public class Vebo3 {
+class Start implements Comparable<Start> {
+    private int id;
+    private int cost;
 
+    public Start(int id, int value) {
+        this.id = id;
+        this.cost = value;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getValue() {
+        return cost;
+    }
+
+    @Override
+    public int compareTo(Start other) {
+        return Integer.compare(this.cost, other.cost);
+    }
+}
+
+public class Vebo3 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        long n = sc.nextInt();
-        Queue<Long> minHeap = new PriorityQueue<>();
-        Map<Long, Long> map = new TreeMap<>();
-        Long sum = (long) 0;
-        for (long i = 1; i < n; i++) { // n truy vấn
-            long t = sc.nextLong();
-            if (t == 1) {  // startup và thu về số tiền là u
-                long u = sc.nextLong();
-                minHeap.add(u);
-                map.put(i, u);
-            }
-            if (t == 2) {
-                long v = sc.nextLong();   // người thứ i đồng ý
-                while (minHeap.size() >= v) {
-                    for (Map.Entry entry : map.entrySet()) {
-                        if (entry.getValue().equals(minHeap.peek())) {
-                            map.remove(entry.getKey());
-                            break;
-                        }
-                    }
-                    minHeap.poll();
+        PriorityQueue<Start> starts = new PriorityQueue<>();
+        int n = sc.nextInt();
+
+        for (int i = 1; i < n; i++) {
+            int k = sc.nextInt();
+            if (k == 1) {
+                Start temp = new Start(i, sc.nextInt());
+                starts.add(temp);
+            } else if (k == 2) {
+                int v = sc.nextInt();
+                while (starts.size() >= v) {
+                    starts.poll();
                 }
             }
         }
-        long t = sc.nextLong();
-        long tmp = sc.nextLong();
-        if (minHeap.size() < tmp) System.out.println(-1);
-        else {
-            while (minHeap.size() > 0) {
-                sum += minHeap.poll();
-            }
-            System.out.println(sum);
-            for (Map.Entry<Long, Long> entry : map.entrySet()) {
-                System.out.print(entry.getKey() + " ");
+
+        sc.nextInt();
+        if (starts.size() < sc.nextInt()) {
+            System.out.println(-1);
+        } else {
+            long sum = 0;
+            List<Integer> id = new ArrayList<>();
+
+            while (!starts.isEmpty()) {
+                Start s = starts.poll();
+                id.add(s.getId());
+                sum += s.getValue();
+
             }
 
+            Collections.sort(id);
+            System.out.println(sum);
+            for (Integer temp : id) {
+                System.out.print(temp + " ");
+            }
         }
     }
 }

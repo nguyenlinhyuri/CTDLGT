@@ -16,7 +16,7 @@ class Point{
 public class ConvexHull {
     public static List<Point> getConvexHull(Point[] points){
         if (points.length < 3) {
-            throw  new IllegalArgumentException("At least 3 points to create a Week6_Sort.ConvexHull");
+            throw  new IllegalArgumentException("At least 3 points to create a ConvexHull");
         }
         List<Point> convexHull = new ArrayList<>();
 

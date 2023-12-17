@@ -162,5 +162,4 @@ public class Linked_list {
         head = reverseNode(head);
         print(head);
     }
-
 }
